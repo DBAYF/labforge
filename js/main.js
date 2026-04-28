@@ -137,22 +137,25 @@ class Game {
     const w = WAVES[idx];
     if (!w) return this._finish(true);
     await this.hud.showBrief(`Wave ${w.n}: ${w.title}`, w.desc);
+    if (this._finished) return; // game ended while we were waiting
     this.waveMgr.startWave(idx);
     this.hud.setWave(w.n, this.waveMgr.total());
   }
 
   _finish(won) {
+    if (this._finished) return; // hard guard — fire only once
+    this._finished = true;
     this.running = false;
     if (won) sfx.win(); else sfx.lose();
-    const profile = recordRun({ won, wave: this.waveMgr.idx + 1, stability: this.stability });
+    let profile = { bestWave: 0, bestStability: 0 };
+    try {
+      profile = recordRun({ won, wave: this.waveMgr.idx + 1, stability: this.stability });
+    } catch (e) { console.warn('storage failed', e); }
     this.hud.showFinale(won, {
       'STABILITY': `${Math.round(this.stability)}%`,
       'WAVE REACHED': `${this.waveMgr.idx + 1} / ${this.waveMgr.total()}`,
       'TOWERS BUILT': this.towers.length,
       'BEST RUN': `W${profile.bestWave} · ${profile.bestStability}%`,
-    }, () => {
-      // Restart by reloading; cheapest correct reset.
-      window.location.reload();
     });
   }
 
@@ -219,22 +222,23 @@ class Game {
     if (this.stability <= 0) {
       return this._finish(false);
     }
-    if (this.waveMgr.isAllClear()) {
-      // Inter-wave delay then advance
-      this.running = false; // pause sim during brief
+    // Inter-wave transition — guarded so it only fires ONCE per cleared wave,
+    // not every frame while we're awaiting the briefing click.
+    if (this.waveMgr.isAllClear() && !this._transitioning) {
+      this._transitioning = true;
       const next = this.waveMgr.idx + 1;
       if (next >= WAVES.length) {
-        // game won
         return this._finish(true);
       }
-      // Brief pause + bonus research
       this.researchPoints += 80;
       this.hud.setResearch(this.researchPoints);
       this.energy = Math.min(this.energyCap, this.energy + 30);
       this.hud.setEnergy(this.energy);
-      this.running = true;
-      this.lastT = performance.now();
-      this._beginWaveFlow(next).then(() => {});
+      this._beginWaveFlow(next).then(() => {
+        // startWave() inside _beginWaveFlow flips allClear false → tick can resume normally.
+        this._transitioning = false;
+        this.lastT = performance.now();
+      });
     }
 
     this.scene.render();

@@ -127,23 +127,19 @@ export class HUD {
   }
 
   // ─── Finale modal ───
-  showFinale(won, statsObj, restartCb) {
-    this.finale.style.setProperty('--fc', won ? '#4ade80' : '#ef4444');
+  // Restart is handled by the button's inline onclick=reload() — bulletproof
+  // against any JS state corruption. Just populate copy + show.
+  showFinale(won, statsObj) {
+    this.finale.style.setProperty('--fc', won ? '#fbbf24' : '#ef4444');
     this.finaleEy.textContent = won ? 'MISSION COMPLETE' : 'GREENHOUSE LOST';
     this.finaleT.textContent  = won ? 'BREAKTHROUGH' : 'COLLAPSE';
     this.finaleS.textContent  = won
-      ? 'You held the line. Research points carry forward to the next mission (coming soon).'
+      ? 'You held the line. Research carries forward to the next mission (coming soon).'
       : 'The greenhouse stability hit zero. Restart and rebalance your defence.';
     this.finaleSt.innerHTML = Object.entries(statsObj).map(([k, v]) =>
       `<li>${k}<b>${v}</b></li>`).join('') +
       `<li style="grid-column:1/-1;text-align:center;color:#71717a;font-size:9px;letter-spacing:2px;">SIGNED BY ZOMISCUOUS</li>`;
     this.finale.hidden = false;
-    const handler = () => {
-      this.finale.hidden = true;
-      this.finaleR.removeEventListener('click', handler);
-      restartCb();
-    };
-    this.finaleR.addEventListener('click', handler);
   }
 
   // ─── Tooltips ───
