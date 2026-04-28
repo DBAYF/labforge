@@ -4,11 +4,14 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="color-scheme" content="dark" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
   <title>LabForge TD — STEM Tower Defence</title>
   <meta name="description" content="3D tower-defence game where you defend humanity's research future with STEM systems instead of weapons. Mars Greenhouse Defence, vol. 1." />
 
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/style.css?v=3" />
 
   <meta property="og:type" content="website" />
   <meta property="og:title" content="LabForge TD" />
@@ -51,17 +54,19 @@
       </div>
     </div>
 
-    <div class="hud__finale" id="finale" hidden>
-      <div class="finale__panel">
+    <div class="hud__finale" id="finale" hidden
+      onclick="if(event.target===this){window.location.href=window.location.pathname+'?r='+Date.now();}">
+      <div class="finale__panel" onclick="event.stopPropagation()">
         <div class="finale__eyebrow" id="finale-eyebrow">MISSION OUTCOME</div>
         <h2 class="finale__title" id="finale-title">—</h2>
         <p class="finale__sub" id="finale-sub"></p>
         <ul class="finale__stats" id="finale-stats"></ul>
         <div class="finale__actions">
-          <button class="btn btn--primary" id="finale-restart" type="button"
-            onclick="window.location.reload()">RESTART MISSION</button>
+          <a class="btn btn--primary" id="finale-restart"
+            href="?r=" onclick="window.location.href=window.location.pathname+'?r='+Date.now();return false;">RESTART MISSION</a>
           <a class="btn btn--ghost" href="https://devdev-games.web.app">↩ PORTAL</a>
         </div>
+        <p class="finale__hint">tap outside this panel · or press <kbd>R</kbd> to restart</p>
       </div>
     </div>
 
@@ -70,6 +75,17 @@
 
   <canvas id="bv-canvas"></canvas>
 
-  <script type="module" src="/js/main.js"></script>
+  <script>
+    // Restart shortcut — works even if main.js fails to load.
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'r' || e.key === 'R') {
+        var f = document.getElementById('finale');
+        if (f && !f.hidden) {
+          window.location.href = window.location.pathname + '?r=' + Date.now();
+        }
+      }
+    });
+  </script>
+  <script type="module" src="/js/main.js?v=3"></script>
 </body>
 </html>
