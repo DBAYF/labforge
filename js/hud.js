@@ -135,7 +135,8 @@ export class HUD {
       ? 'You held the line. Research points carry forward to the next mission (coming soon).'
       : 'The greenhouse stability hit zero. Restart and rebalance your defence.';
     this.finaleSt.innerHTML = Object.entries(statsObj).map(([k, v]) =>
-      `<li>${k}<b>${v}</b></li>`).join('');
+      `<li>${k}<b>${v}</b></li>`).join('') +
+      `<li style="grid-column:1/-1;text-align:center;color:#71717a;font-size:9px;letter-spacing:2px;">SIGNED BY ZOMISCUOUS</li>`;
     this.finale.hidden = false;
     const handler = () => {
       this.finale.hidden = true;

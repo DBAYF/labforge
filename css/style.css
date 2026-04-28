@@ -15,11 +15,13 @@ canvas { position: fixed; inset: 0; width: 100%; height: 100%; touch-action: non
   background: linear-gradient(to bottom, rgba(6,12,20,0.92), rgba(6,12,20,0));
 }
 .hud__brand {
+  display: flex; flex-direction: column; align-items: flex-start; gap: 2px;
   font-weight: 900; font-size: 18px; letter-spacing: -0.5px;
-  background: linear-gradient(135deg, #4ade80 0%, #06b6d4 100%);
+  background: linear-gradient(135deg, #fef08a 0%, #fbbf24 60%, #ca8a04 100%);
   -webkit-background-clip: text; background-clip: text; color: transparent;
 }
-.hud__td { font-family: ui-monospace, 'SF Mono', monospace; font-size: 13px; letter-spacing: 1px; opacity: 0.7; margin-left: 4px; color: #06b6d4; -webkit-text-fill-color: #06b6d4; }
+.hud__td { font-family: ui-monospace, 'SF Mono', monospace; font-size: 13px; letter-spacing: 1px; opacity: 0.85; margin-left: 4px; color: #fbbf24; -webkit-text-fill-color: #fbbf24; }
+.hud__sig { font: 700 8px ui-monospace, monospace; letter-spacing: 2px; color: #71717a; -webkit-text-fill-color: #71717a; opacity: 0.85; }
 
 .hud__stats { display: flex; gap: 18px; }
 .stat { display: flex; flex-direction: column; align-items: flex-end; }

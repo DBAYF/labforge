@@ -10,8 +10,9 @@
   "playUrl": "https://labforge-td.web.app",
   "version": "0.1-alpha",
   "releaseDate": "2026-04-28",
-  "accentColor": "#4ade80",
-  "darkColor": "#060c14",
+  "author": "ZOMISCUOUS",
+  "accentColor": "#fde047",
+  "darkColor": "#0a1408",
   "capsules": {
     "hero": "/games/labforge-td/capsule-616x353.svg",
     "catalog": "/games/labforge-td/capsule-460x215.svg",
@@ -52,7 +53,7 @@
     { "id": "first_kill",       "name": "FIRST CONTAINMENT",   "desc": "Neutralise your first threat.", "kind": "kills",   "target": 1 },
     { "id": "wave_5_clear",     "name": "MARS HOLDFAST",       "desc": "Clear all 5 waves of the Mars Greenhouse mission.", "kind": "rank", "target": 1 },
     { "id": "stability_90",     "name": "PRECISION RESEARCH",  "desc": "Win with stability above 90%.", "kind": "survival", "target": 90, "rare": true },
-    { "id": "no_radiation",     "name": "FIELD INTEGRITY",     "desc": "Allow zero radiation bursts to reach the greenhouse.", "kind": "damage", "target": 0 },
+    { "id": "no_radiation",     "name": "FIELD INTEGRITY",     "desc": "Win without letting any radiation burst reach the greenhouse.", "kind": "damage", "target": 1 },
     { "id": "no_browning_out",  "name": "GRID DISCIPLINE",     "desc": "Win the mission without ever entering a brown-out.", "kind": "rank", "target": 1, "rare": true },
     { "id": "minimal_towers",   "name": "EFFICIENT DEFENCE",   "desc": "Win with 6 or fewer towers placed.", "kind": "rank", "target": 6, "rare": true }
   ],
