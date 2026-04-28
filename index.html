@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="color-scheme" content="dark" />
+  <title>LabForge TD — STEM Tower Defence</title>
+  <meta name="description" content="3D tower-defence game where you defend humanity's research future with STEM systems instead of weapons. Mars Greenhouse Defence, vol. 1." />
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="stylesheet" href="/css/style.css" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="LabForge TD" />
+  <meta property="og:description" content="3D tower-defence with STEM systems instead of weapons. Defend the Mars Greenhouse." />
+
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.171.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.171.0/examples/jsm/"
+      }
+    }
+  </script>
+</head>
+<body>
+  <div id="hud" class="hud">
+    <header class="hud__top">
+      <div class="hud__brand">LabForge<span class="hud__td">·TD</span></div>
+      <div class="hud__stats">
+        <div class="stat" id="stat-stability"><span class="stat__l">STABILITY</span><span class="stat__v">100</span></div>
+        <div class="stat" id="stat-energy"   ><span class="stat__l">ENERGY</span><span class="stat__v">100</span></div>
+        <div class="stat" id="stat-research" ><span class="stat__l">RESEARCH</span><span class="stat__v">300</span></div>
+        <div class="stat" id="stat-wave"     ><span class="stat__l">WAVE</span><span class="stat__v">0 / 5</span></div>
+      </div>
+    </header>
+
+    <aside class="hud__towers" id="tower-picker">
+      <!-- populated by hud.js -->
+    </aside>
+
+    <div class="hud__brief" id="brief" hidden>
+      <div class="brief__panel">
+        <div class="brief__eyebrow">INCOMING THREAT</div>
+        <h2 class="brief__title" id="brief-title">Wave 1</h2>
+        <p class="brief__desc" id="brief-desc"></p>
+        <button class="btn btn--primary" id="brief-go">DEPLOY ▸</button>
+      </div>
+    </div>
+
+    <div class="hud__finale" id="finale" hidden>
+      <div class="finale__panel">
+        <div class="finale__eyebrow" id="finale-eyebrow">MISSION OUTCOME</div>
+        <h2 class="finale__title" id="finale-title">—</h2>
+        <p class="finale__sub" id="finale-sub"></p>
+        <ul class="finale__stats" id="finale-stats"></ul>
+        <div class="finale__actions">
+          <button class="btn btn--primary" id="finale-restart">RESTART MISSION</button>
+          <a class="btn btn--ghost" href="https://devdev-games.web.app">↩ PORTAL</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="hud__tooltip" id="tt"></div>
+  </div>
+
+  <canvas id="bv-canvas"></canvas>
+
+  <script type="module" src="/js/main.js"></script>
+</body>
+</html>

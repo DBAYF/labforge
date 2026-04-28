@@ -1,0 +1,163 @@
+/* LabForge TD — single CSS surface. Overlays + HUD only; the game world is canvas. */
+
+*,*::before,*::after { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; background: #060c14; color: #e8efff; overflow: hidden;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased; }
+canvas { position: fixed; inset: 0; width: 100%; height: 100%; touch-action: none; }
+
+/* ─── HUD shell ─── */
+.hud { position: fixed; inset: 0; pointer-events: none; z-index: 5; }
+.hud__top {
+  pointer-events: auto;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 18px;
+  background: linear-gradient(to bottom, rgba(6,12,20,0.92), rgba(6,12,20,0));
+}
+.hud__brand {
+  font-weight: 900; font-size: 18px; letter-spacing: -0.5px;
+  background: linear-gradient(135deg, #4ade80 0%, #06b6d4 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.hud__td { font-family: ui-monospace, 'SF Mono', monospace; font-size: 13px; letter-spacing: 1px; opacity: 0.7; margin-left: 4px; color: #06b6d4; -webkit-text-fill-color: #06b6d4; }
+
+.hud__stats { display: flex; gap: 18px; }
+.stat { display: flex; flex-direction: column; align-items: flex-end; }
+.stat__l { font: 800 9px/1 ui-monospace, monospace; letter-spacing: 1.5px; color: #6c7a92; text-transform: uppercase; margin-bottom: 3px; }
+.stat__v { font: 800 18px/1 ui-monospace, monospace; color: #fff; }
+#stat-stability .stat__v { color: #4ade80; }
+#stat-stability.warn .stat__v { color: #fbbf24; }
+#stat-stability.danger .stat__v { color: #ef4444; }
+#stat-energy .stat__v { color: #fbbf24; }
+#stat-energy.empty .stat__v { color: #ef4444; }
+#stat-research .stat__v { color: #06b6d4; }
+
+/* ─── Tower picker (left rail) ─── */
+.hud__towers {
+  pointer-events: auto;
+  position: absolute; left: 14px; top: 76px; bottom: 80px;
+  display: flex; flex-direction: column; gap: 8px;
+  width: 122px;
+}
+.tw {
+  background: rgba(8, 14, 22, 0.86);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 6px;
+  padding: 10px;
+  cursor: pointer;
+  display: flex; flex-direction: column; gap: 6px;
+  transition: border-color 120ms ease, transform 120ms ease;
+  text-align: left;
+  color: inherit; font: inherit;
+}
+.tw:hover  { border-color: rgba(74, 222, 128, 0.5); transform: translateY(-1px); }
+.tw[aria-pressed="true"] { border-color: var(--tc, #4ade80); background: rgba(74, 222, 128, 0.1); }
+.tw[disabled] { opacity: 0.4; cursor: not-allowed; }
+.tw__icon { width: 24px; height: 24px; }
+.tw__name { font: 800 11px/1.2 ui-monospace, monospace; letter-spacing: 1px; color: var(--tc, #4ade80); text-transform: uppercase; }
+.tw__cost { font: 700 10px/1 ui-monospace, monospace; color: #c0d0e8; }
+.tw__cost b { color: #06b6d4; }
+
+/* ─── Briefing modal ─── */
+.hud__brief {
+  pointer-events: auto;
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(6, 12, 20, 0.7);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+.brief__panel {
+  max-width: 520px; padding: 28px;
+  background: rgba(8, 14, 22, 0.96);
+  border: 1px solid rgba(74, 222, 128, 0.4);
+  border-radius: 10px;
+  text-align: center;
+}
+.brief__eyebrow { font: 800 10px ui-monospace, monospace; letter-spacing: 3px; color: #4ade80; }
+.brief__title { font-size: 32px; font-weight: 900; letter-spacing: -1px; margin: 6px 0 12px; }
+.brief__desc { font-size: 14px; line-height: 1.55; color: #c0d0e8; margin: 0 0 18px; }
+
+/* ─── Finale modal ─── */
+.hud__finale {
+  pointer-events: auto;
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(6, 12, 20, 0.85);
+}
+.finale__panel {
+  max-width: 480px; padding: 32px;
+  background: rgba(8, 14, 22, 0.98);
+  border: 1px solid var(--fc, #4ade80);
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 20px 60px color-mix(in srgb, var(--fc, #4ade80) 30%, transparent);
+}
+.finale__eyebrow { font: 800 10px ui-monospace, monospace; letter-spacing: 3px; color: var(--fc, #4ade80); }
+.finale__title { font-size: 36px; font-weight: 900; letter-spacing: -1px; margin: 6px 0 8px; }
+.finale__sub   { font-size: 14px; color: #c0d0e8; margin: 0 0 16px; }
+.finale__stats { list-style: none; padding: 0; margin: 0 0 18px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+.finale__stats li {
+  padding: 8px 12px;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 6px;
+  font: 700 11px ui-monospace, monospace;
+  letter-spacing: 1px;
+  text-align: left;
+}
+.finale__stats li b { color: var(--fc, #4ade80); display: block; font-size: 18px; margin-top: 2px; }
+.finale__actions { display: flex; gap: 8px; justify-content: center; }
+
+/* ─── Buttons ─── */
+.btn {
+  font-family: ui-monospace, 'SF Mono', monospace;
+  font-weight: 800; font-size: 12px; letter-spacing: 2px;
+  padding: 12px 22px; border-radius: 4px;
+  border: 1px solid transparent;
+  cursor: pointer; user-select: none;
+  text-decoration: none; color: inherit;
+  display: inline-flex; align-items: center; gap: 6px;
+  transition: background 120ms ease, transform 120ms ease;
+}
+.btn--primary { background: #4ade80; color: #060c14; }
+.btn--primary:hover { background: #66e899; transform: translateY(-1px); }
+.btn--ghost   { border-color: rgba(255,255,255,0.18); color: #c0d0e8; }
+.btn--ghost:hover { border-color: #4ade80; color: #4ade80; }
+
+/* ─── Tooltip ─── */
+.hud__tooltip {
+  position: absolute; max-width: 260px;
+  padding: 10px 14px;
+  background: rgba(0, 0, 0, 0.92);
+  border: 1px solid rgba(74, 222, 128, 0.4);
+  border-radius: 6px;
+  font-size: 12px;
+  line-height: 1.45;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 120ms ease;
+  z-index: 20;
+}
+.hud__tooltip.show { opacity: 1; }
+.hud__tooltip h4 { margin: 0 0 4px; color: var(--tc, #4ade80); font-size: 13px; letter-spacing: 0.5px; }
+.hud__tooltip p { margin: 0; color: #c0d0e8; }
+.hud__tooltip .stem { margin-top: 6px; padding-top: 6px; border-top: 1px dashed rgba(255,255,255,0.1); font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: #06b6d4; font-weight: 700; }
+
+/* ─── Build ghost (cursor preview) ─── */
+.build-cursor { cursor: cell; }
+
+/* ─── Mobile ─── */
+@media (max-width: 720px) {
+  .hud__brand { font-size: 14px; }
+  .hud__stats { gap: 10px; }
+  .stat__v { font-size: 14px; }
+  .hud__towers { width: 92px; left: 8px; top: 64px; bottom: 64px; }
+  .tw { padding: 8px; }
+  .tw__name { font-size: 10px; letter-spacing: 0.5px; }
+  .brief__panel, .finale__panel { padding: 22px; max-width: 92vw; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hud__tooltip, .btn, .tw { transition: none !important; }
+}

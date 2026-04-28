@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#4ade80"/>
+      <stop offset="1" stop-color="#06b6d4"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="10" fill="#060c14"/>
+  <!-- abstract dome + tower -->
+  <path d="M16 44 Q32 22 48 44 Z" fill="none" stroke="url(#g)" stroke-width="3"/>
+  <path d="M30 44 V32 M34 44 V32" stroke="url(#g)" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="32" cy="22" r="2" fill="#4ade80"/>
+</svg>

@@ -1,0 +1,72 @@
+{
+  "slug": "labforge-td",
+  "title": "LabForge TD",
+  "subtitle": "STEM TOWER DEFENCE",
+  "tagline": "Defend the future of research with science, not weapons.",
+  "description": "3D tower defence where every tower teaches a STEM concept. Stop pathogens with UV light, deflect radiation bursts with magnetic fields, balance energy supply with solar arrays. Mars Greenhouse Defence is mission one. More labs unlock as you level up.",
+  "genre": ["Strategy", "Puzzle", "Simulation"],
+  "tags": ["TowerDefence", "STEM", "Educational", "3D", "Free"],
+  "rating": "PEGI-3",
+  "playUrl": "https://labforge-td.web.app",
+  "version": "0.1-alpha",
+  "releaseDate": "2026-04-28",
+  "accentColor": "#4ade80",
+  "darkColor": "#060c14",
+  "capsules": {
+    "hero": "/games/labforge-td/capsule-616x353.svg",
+    "catalog": "/games/labforge-td/capsule-460x215.svg",
+    "mini": "/games/labforge-td/capsule-184x69.svg"
+  },
+  "screenshots": [
+    "/games/labforge-td/screenshot-01.svg",
+    "/games/labforge-td/screenshot-02.svg",
+    "/games/labforge-td/screenshot-03.svg",
+    "/games/labforge-td/screenshot-04.svg",
+    "/games/labforge-td/screenshot-05.svg"
+  ],
+  "stats": {
+    "missions": 1,
+    "towers": 3,
+    "enemyTypes": 3,
+    "waves": 5,
+    "stemFields": 4,
+    "labsPlanned": 8,
+    "towersPlanned": 14
+  },
+  "features": {
+    "multiplayer": false,
+    "controller": false,
+    "mobile": true,
+    "ageGate": false,
+    "freeToPlay": true
+  },
+  "classShowcase": [
+    { "id": "solar",    "name": "SOLAR ARRAY",      "role": "GENERATOR",  "weapon": "ENERGY +2/s",  "color": "#fbbf24", "bio": "Powers nearby towers. Tilt and dust efficiency in v1.1." },
+    { "id": "uv",       "name": "UV STERILISER",    "role": "ANTI-BIO",   "weapon": "DNA-DAMAGE BEAM 14 dps", "color": "#06b6d4", "bio": "UV light disrupts DNA. Devastating to spores and bacteria." },
+    { "id": "magnetic", "name": "MAGNETIC EMITTER", "role": "ANTI-RAD",   "weapon": "FIELD DEFLECT 22 dps",   "color": "#a78bfa", "bio": "Deflects charged particles. The only counter to solar storms." },
+    { "id": "carbon",   "name": "CARBON FILTER",    "role": "ANTI-POLL",  "weapon": "FILTRATION (v1.1)",     "color": "#94a3b8", "bio": "Activated carbon adsorption. Coming in v1.1." },
+    { "id": "battery",  "name": "BATTERY BANK",     "role": "STORAGE",    "weapon": "GRID BUFFER (v1.1)",    "color": "#f97316", "bio": "Absorbs surges, prevents brown-outs. Coming in v1.1." },
+    { "id": "ai",       "name": "AI PATTERN CORE",  "role": "BOOSTER",    "weapon": "TARGET PREDICTION (v1.2)", "color": "#ec4899", "bio": "Learns from prior waves; cyber-vulnerable. Coming in v1.2." }
+  ],
+  "achievements": [
+    { "id": "first_kill",       "name": "FIRST CONTAINMENT",   "desc": "Neutralise your first threat.", "kind": "kills",   "target": 1 },
+    { "id": "wave_5_clear",     "name": "MARS HOLDFAST",       "desc": "Clear all 5 waves of the Mars Greenhouse mission.", "kind": "rank", "target": 1 },
+    { "id": "stability_90",     "name": "PRECISION RESEARCH",  "desc": "Win with stability above 90%.", "kind": "survival", "target": 90, "rare": true },
+    { "id": "no_radiation",     "name": "FIELD INTEGRITY",     "desc": "Allow zero radiation bursts to reach the greenhouse.", "kind": "damage", "target": 0 },
+    { "id": "no_browning_out",  "name": "GRID DISCIPLINE",     "desc": "Win the mission without ever entering a brown-out.", "kind": "rank", "target": 1, "rare": true },
+    { "id": "minimal_towers",   "name": "EFFICIENT DEFENCE",   "desc": "Win with 6 or fewer towers placed.", "kind": "rank", "target": 6, "rare": true }
+  ],
+  "changelog": [
+    {
+      "version": "0.1-alpha",
+      "date": "2026-04-28",
+      "summary": "First alpha. Mars Greenhouse Defence playable end-to-end with 3 towers, 3 enemy types, 5 waves.",
+      "highlights": [
+        "Three.js r171 vanilla ES modules — no bundler, no build step",
+        "Tower placement on 16×10 grid with path occlusion",
+        "Energy economy: solar arrays generate, attack towers consume; brown-out if banked energy hits zero",
+        "Live STEM tooltip on every tower explains the concept"
+      ]
+    }
+  ]
+}
