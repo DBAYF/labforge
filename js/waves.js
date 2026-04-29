@@ -6,25 +6,25 @@ export const WAVES = [
   {
     n: 1,
     title: 'Drifting Dust',
-    desc: 'Mars regolith drifts toward the greenhouse. Place a UV Steriliser? No — these are not biological. Filtration would ideally help, but for now: any tower in range will work via its physical presence. Your job is to stop them at the greenhouse.',
+    desc: 'Mars regolith drifts toward the greenhouse. Any tower in range will damage them, but at reduced efficiency — the right tool for pollution arrives later (Carbon Filter, v0.2).',
     spawns: [{ type: 'dust_cloud', count: 6, interval: 1.2 }],
   },
   {
     n: 2,
     title: 'Spore Bloom',
-    desc: 'A fungal spore bloom enters the path. UV light disrupts their DNA — deploy UV Sterilisers along the route.',
+    desc: 'A fungal spore bloom enters the path. UV light shreds DNA — UV Sterilisers deal FULL damage here.',
     spawns: [{ type: 'crop_spore', count: 9, interval: 0.9 }],
   },
   {
     n: 3,
     title: 'Solar Storm',
-    desc: 'Radiation bursts from a solar coronal ejection. Magnetic Emitters deflect charged particles — UV is useless against radiation.',
+    desc: 'Radiation bursts from a coronal ejection. Magnetic Emitters deflect charged particles at FULL damage; UV does only a fraction. Build a Magnetic Emitter or two.',
     spawns: [{ type: 'radiation_burst', count: 5, interval: 1.4 }],
   },
   {
     n: 4,
     title: 'Compound Threat',
-    desc: 'Spores ride dust storms — a mixed biological + pollution wave. Layer your defences along the path.',
+    desc: 'Spores ride dust storms — biological + pollution. UV will tear through the spores at full damage; pollution takes glancing hits. Layer your defences along the path.',
     spawns: [
       { type: 'dust_cloud', count: 7, interval: 1.0 },
       { type: 'crop_spore', count: 10, interval: 0.7 },
@@ -33,7 +33,7 @@ export const WAVES = [
   {
     n: 5,
     title: 'System Crisis',
-    desc: 'Everything at once: dust, spores, AND a radiation burst behind. Energy will spike — make sure your solar arrays can power every active tower.',
+    desc: 'Everything at once: dust, spores AND radiation. Bright beams = full damage (matched type). Dim beams = glancing hit. Make sure solar arrays can power every active tower or watch the grid brown-out.',
     spawns: [
       { type: 'dust_cloud',      count: 8,  interval: 0.9 },
       { type: 'crop_spore',      count: 12, interval: 0.7 },

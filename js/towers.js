@@ -167,25 +167,30 @@ export class Tower {
 
     const energySpent = this.def.energyDraw * dt; // positive = spent
 
-    // Pick target (closest enemy in range whose type matches our targets list).
-    const valid = enemies.filter((e) => {
-      if (!e.alive) return false;
-      if (!this.def.targets) return false;
-      if (!this.def.targets.includes(e.def.type)) return false;
-      const d = e.pos.distanceTo(this.pos);
-      return d <= this.def.range;
-    });
+    // Generators have no targets list → return early before scanning enemies.
+    if (!this.def.targets) {
+      if (this.beam) this.beam.material.opacity = 0;
+      return -energySpent;
+    }
+
+    // Pick the closest enemy IN RANGE — any type. Damage gets a 1.0× multiplier
+    // if the enemy type matches the tower's preferred-target list, 0.4× otherwise.
+    // This means every tower is at least somewhat useful against everything,
+    // while the STEM identity (UV best vs bio, Magnetic best vs radiation) holds.
     let best = null;
     let bestDist = Infinity;
-    for (const e of valid) {
+    for (const e of enemies) {
+      if (!e.alive) continue;
       const d = e.pos.distanceTo(this.pos);
-      if (d < bestDist) { bestDist = d; best = e; }
+      if (d <= this.def.range && d < bestDist) { bestDist = d; best = e; }
     }
     this.target = best;
 
     if (best) {
-      best.takeDamage(this.def.dps * dt);
-      this._drawBeam(best.pos);
+      const matched = this.def.targets.includes(best.def.type);
+      const mul = matched ? 1.0 : 0.4;
+      best.takeDamage(this.def.dps * mul * dt);
+      this._drawBeam(best.pos, matched);
       if (this.coreMesh) {
         this.coreMesh.scale.setScalar(1 + Math.sin(performance.now() * 0.012) * 0.12);
       }
@@ -197,7 +202,7 @@ export class Tower {
     return -energySpent; // negative because spent
   }
 
-  _drawBeam(targetPos) {
+  _drawBeam(targetPos, matched = true) {
     if (!this.beam) return;
     const geom = this.beam.geometry;
     const arr = geom.attributes.position.array;
@@ -206,7 +211,8 @@ export class Tower {
     arr[0] = start.x; arr[1] = start.y; arr[2] = start.z;
     arr[3] = targetPos.x; arr[4] = targetPos.y + 0.6; arr[5] = targetPos.z;
     geom.attributes.position.needsUpdate = true;
-    this.beam.material.opacity = 0.85;
+    // Bright beam against preferred type, dim when shooting off-type.
+    this.beam.material.opacity = matched ? 0.85 : 0.35;
   }
 
   setOnline(on) {
